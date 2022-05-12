@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\Country;
-use App\Models\SolarData;
+use App\Http\Controllers\SolarIrradianceController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +15,16 @@ use App\Models\SolarData;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Show form to create new solar irradiance data
+Route::get('/list/create', [SolarIrradianceController::class, 'create']);
 
-Route::get('/solar', function () {
-    return view('solar');
-});
+// List all solar irradiance data
+Route::get('/list', [SolarIrradianceController::class, 'list']);
+
+// Store new solar irradiance data
+Route::post('/list', [SolarIrradianceController::class, 'store']);
+
+// List Single solar irradiance data
+Route::get('/list/{solarIrradiance}', [SolarIrradianceController::class, 'show']);
+
+

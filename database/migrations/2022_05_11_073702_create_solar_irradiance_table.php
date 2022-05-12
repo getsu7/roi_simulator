@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('solar_irradiance', function (Blueprint $table) {
+        Schema::create('solar_irradiances', function (Blueprint $table) {
             $table->id();
             $table->String('city_country');
-            $table->String('month');
+            $table->integer('month');
             $table->json('data');
             $table->timestamps();
         });
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('solar_irradiance');
+        Schema::dropIfExists('solar_irradiances');
     }
 };

@@ -9,5 +9,13 @@ class SolarIrradiance extends Model
 {
     use HasFactory;
 
-    protected $month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    protected $fillable = [
+        'city_country',
+        'month',
+        'data',
+    ];
+    
+    protected $casts = [
+        'data' => 'array',
+    ];
 }
