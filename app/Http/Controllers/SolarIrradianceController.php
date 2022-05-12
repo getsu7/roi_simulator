@@ -33,17 +33,18 @@ class SolarIrradianceController extends Controller
     // Store new solar irradiance data
     public function store(Request $request)
     {
-        $data = new SolarIrradiance;
+        $data = file_get_contents($request->json_file);
+        $json = json_decode($data, true);
+        $solarIrradiance = new SolarIrradiance;
 
-        $data->city_country = $request->city_country;
+        for($i = 0; $i < count($json['outputs']['daily_profile']); $i++) {
+            $solarIrradiance->{$i} = $json['outputs']['daily_profile'][$i]['G(i)'];
+        }
+        $solarIrradiance->month = $request->month;
+        $solarIrradiance->city_country = $request->city_country;
+        $solarIrradiance->save();
 
-        $data->month = $request->month;
-
-        $data->data = file_get_contents($request->data);
-
-        $data->save();
-
-        return redirect('/')->with('message', 'Solar Irradiance data has been added!');
+        return redirect('/list')->with('message', 'Solar Irradiance data has been added!');
     }
 
 

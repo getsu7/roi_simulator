@@ -15,9 +15,11 @@ return new class extends Migration
     {
         Schema::create('solar_irradiances', function (Blueprint $table) {
             $table->id();
-            $table->String('city_country');
-            $table->integer('month');
-            $table->json('data');
+            for($i = 0; $i <= 23; $i++) {
+                $table->float($i, 6, 2);
+            }
+            $table->string('month');
+            $table->string('city_country');
             $table->timestamps();
         });
     }
