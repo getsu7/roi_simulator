@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\SolarIrradiance;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class SolarIrradianceController extends Controller
 {
@@ -31,20 +33,17 @@ class SolarIrradianceController extends Controller
     // Store new solar irradiance data
     public function store(Request $request)
     {
-        $request->data = file_get_contents($request->data);
+        $data = new SolarIrradiance;
 
-        //dd($request->all());
+        $data->city_country = $request->city_country;
 
-        $request->validate([
-            'city_country' => 'required',
-            'month' => 'required',
-            'data' => 'required',
-        ]);
+        $data->month = $request->month;
 
-        SolarIrradiance::create($request->all());
+        $data->data = file_get_contents($request->data);
+
+        $data->save();
 
         return redirect('/')->with('message', 'Solar Irradiance data has been added!');
-
     }
 
 
