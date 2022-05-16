@@ -19,10 +19,13 @@ return new class extends Migration
 
         Schema::create('cities', function (Blueprint $table) {
             $table->id();
-            $table->string('city')->unique();
-            $table->foreign('country_id')->constrained('id')->on('countries')->onDelete();
-            $table->unsignedBigInteger('user_id')->constrained('id')->on('users');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('country_id');
+            $table->string('name')->unique();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
         });
     }
 

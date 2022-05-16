@@ -21,7 +21,7 @@ return new class extends Migration
             $table->id();
             $table->integer('numeric_month')->unique();
             $table->string('month')->unique();
-            $table->unsignedBigInteger('user_id')->constrained('id')->on('users');
+            
             $table->timestamps();
         });
     }

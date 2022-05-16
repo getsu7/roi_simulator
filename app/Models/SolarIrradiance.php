@@ -34,7 +34,11 @@ class SolarIrradiance extends Model
         '21',
         '22',
         '23',
-        'month',
-        'city_country',
     ];
+
+    // public function month()
+    // {
+    //     return $this->belongsToMany(Month::class, 'solar_irradiance');
+    // }
+    
 }

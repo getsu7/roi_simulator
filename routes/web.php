@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SolarIrradianceController;
+use App\Http\Controllers\CityController;
 
 
 /*
@@ -16,15 +17,37 @@ use App\Http\Controllers\SolarIrradianceController;
 */
 
 // Show form to create new solar irradiance data
-Route::get('/list/create', [SolarIrradianceController::class, 'create']);
+Route::get('/irradiance/create', [SolarIrradianceController::class, 'create']);
 
 // List all solar irradiance data
-Route::get('/list', [SolarIrradianceController::class, 'list']);
+Route::get('/irradiance', [SolarIrradianceController::class, 'index']);
 
 // Store new solar irradiance data
-Route::post('/list', [SolarIrradianceController::class, 'store']);
+Route::post('/irradiance', [SolarIrradianceController::class, 'store']);
 
 // List Single solar irradiance data
-Route::get('/list/{solarIrradiance}', [SolarIrradianceController::class, 'show']);
+Route::get('/irradiance/{solarIrradiance}', [SolarIrradianceController::class, 'show']);
+
+// Show form to create new city
+Route::get('/city/create', [CityController::class, 'create']);
+
+// List all cities
+Route::get('/city', [CityController::class, 'index']);
+
+// Store a new city
+Route::post('/city', [CityController::class, 'store']);
+
+// Show single city
+Route::get('/city/{city}', [CityController::class, 'show']);
+
+// Show form to edit city
+Route::get('/city/{city}/edit', [CityController::class, 'edit']);
+
+// Update city
+Route::put('/city/{city}', [CityController::class, 'update']);
+
+// Delete city
+Route::delete('/city/{city}', [CityController::class, 'destroy']);
+
 
 

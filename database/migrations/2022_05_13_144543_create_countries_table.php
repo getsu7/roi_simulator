@@ -19,9 +19,11 @@ return new class extends Migration
         
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
-            $table->string('country')->unique();
-            $table->unsignedBigInteger('user_id')->constrained('id')->on('users');
+            $table->unsignedBigInteger('user_id');
+            $table->string('name')->unique();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SolarIrradiance;
+use App\Models\City;
+use App\Models\Month;
 use Illuminate\Http\Request;
+use App\Models\SolarIrradiance;
 use App\Http\Controllers\Controller;
 
 class SolarIrradianceController extends Controller
@@ -11,7 +13,7 @@ class SolarIrradianceController extends Controller
     // List all solar irradiance data
     public function list()
     {
-        return view('listings.index', 
+        return view('irradiance.index', 
         ['solarIrradiances' => SolarIrradiance::all()]
     );
     }
@@ -19,7 +21,7 @@ class SolarIrradianceController extends Controller
     // List Single solar irradiance data
     public function show(SolarIrradiance $solarIrradiance)
     {
-        return view('listings.show', [
+        return view('irradiance.show', [
             'solarIrradiance' => $solarIrradiance
         ]);
     }
@@ -27,7 +29,13 @@ class SolarIrradianceController extends Controller
     // Show form to create new solar irradiance data
     public function create()
     {
-        return view('listings.create');
+        $months = Month::all();
+        $cities = City::all();
+        
+        return view('irradiance.create', [
+            'months' => $months,
+            'cities' => $cities 
+        ]);
     }
 
     // Store new solar irradiance data
