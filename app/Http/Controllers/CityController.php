@@ -6,14 +6,17 @@ use App\Models\City;
 use App\Models\Month;
 use Illuminate\Http\Request;
 use App\Models\SolarIrradiance;
+use Illuminate\Support\Facades\Auth;
 
 class CityController extends Controller
 {
+
+    private City $city;
+
     // List all cities
     public function index()
     {
-        $cities = City::all();
-        return view('city.index', ['cities' => $cities]);
+        return view('city.index', ['cities' => City::all()]);
     }
 
     // Show single city
@@ -25,19 +28,16 @@ class CityController extends Controller
     // Show form to create new city
     public function create()
     {
-        $city = new City();
-        return view('city.create', ['city' => $city]);
+        return view('city.create', ['city' => new City()]);
     }
 
     // Store new city
     public function store(Request $request)
     {
-        $city = new City;
-        $city->city = $request->city;
-        $city->country = $request->country;       
-        $city->save();
-
-        return redirect('/city')->with('message', 'City has been added!');
+        if($this->setCityAttributes($request)){
+            return redirect('/city')->with('message', 'City has been added!');
+        }
+        return redirect('/city')->with('message', 'Error adding City!');
     }
 
     // Show form to edit city

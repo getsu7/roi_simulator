@@ -1,9 +1,11 @@
 <?php
 
+use App\Models\City;
+use App\Models\Country;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SolarIrradianceController;
 use App\Http\Controllers\CityController;
-
+use App\Http\Controllers\CountryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,38 +18,25 @@ use App\Http\Controllers\CityController;
 |
 */
 
-// Show form to create new solar irradiance data
-Route::get('/irradiance/create', [SolarIrradianceController::class, 'create']);
+Route::get('/', function () {
+    return view('welcome');
+});
 
-// List all solar irradiance data
-Route::get('/irradiance', [SolarIrradianceController::class, 'index']);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
-// Store new solar irradiance data
-Route::post('/irradiance', [SolarIrradianceController::class, 'store']);
+Route::get('/country', [CountryController::class, 'index'])->middleware(['auth'])->name('country');
 
-// List Single solar irradiance data
-Route::get('/irradiance/{solarIrradiance}', [SolarIrradianceController::class, 'show']);
+Route::post('/country', [CountryController::class, 'store'])->middleware(['auth'])->name('country.store');
 
-// Show form to create new city
-Route::get('/city/create', [CityController::class, 'create']);
+Route::get('/country/create', [CountryController::class, 'create'])->middleware(['auth'])->name('country.create');
 
-// List all cities
-Route::get('/city', [CityController::class, 'index']);
+Route::get('/country/{country}', [CountryController::class, 'show'])->middleware(['auth'])->name('country.show');
 
-// Store a new city
-Route::post('/city', [CityController::class, 'store']);
+Route::put('/country/{country}', [CountryController::class, 'update'])->middleware(['auth'])->name('country.update');
 
-// Show single city
-Route::get('/city/{city}', [CityController::class, 'show']);
-
-// Show form to edit city
-Route::get('/city/{city}/edit', [CityController::class, 'edit']);
-
-// Update city
-Route::put('/city/{city}', [CityController::class, 'update']);
-
-// Delete city
-Route::delete('/city/{city}', [CityController::class, 'destroy']);
+Route::get('/country/{country}/edit', [CountryController::class, 'edit'])->middleware(['auth'])->name('country.edit');
 
 
-
+require __DIR__.'/auth.php';
