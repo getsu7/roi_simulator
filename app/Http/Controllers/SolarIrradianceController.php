@@ -38,7 +38,7 @@ class SolarIrradianceController extends Controller
         $solarIrradiance = new SolarIrradiance;
 
         for($i = 0; $i < count($json['outputs']['daily_profile']); $i++) {
-            $solarIrradiance->{$i} = $json['outputs']['daily_profile'][$i]['G(i)'];
+            $solarIrradiance->{$i} = $json['outputs']['daily_profile'][$i]['G(n)'];
         }
         $solarIrradiance->month = $request->month;
         $solarIrradiance->city_country = $request->city_country;

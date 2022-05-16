@@ -12,7 +12,7 @@
     <p>{{ $solarIrradiance->city_country }}</p>
     <br>
     <h1>Irradiance</h1>
-    <pre><code>{{ $solarIrradiance->data }}</code></pre>
+    <p>{{ $solarIrradiance->data }}</p>
     <br>
     <h1>Month</h1>
     <p>{{ $solarIrradiance->month }}<p>
