@@ -16,7 +16,6 @@ class Country extends Model
 
     protected $fillable = [
         'name',
-        'user',
     ];
 
     public function city()
@@ -42,9 +41,12 @@ class Country extends Model
 
     public function updateCountry(Request $request)
     {
-        DB::table('countries')
-            ->where('id', $request->id)
-            ->update(['name' => $request->name], ['user_id' => Auth::id()]);
+        $this->name = $request->name;
+        $this->user_id = Auth::id();
+        if($this->update()) {
+            return true;
+        }
+        return false;
     }
 
 }

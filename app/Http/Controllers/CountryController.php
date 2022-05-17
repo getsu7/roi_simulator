@@ -20,7 +20,7 @@ class CountryController extends Controller
     
     public function create()
     {
-        return view('country.create', ['country' => Country::class]);
+        return view('country.create', ['country' => new Country()]);
     }
 
     public function store(Request $request)
@@ -41,8 +41,16 @@ class CountryController extends Controller
     public function update(Request $request, Country $country)
     {
 
-        $country->updateCountry($request);
-        return redirect('/country')->with('message', 'Country has been updated!');
+        if($country->updateCountry($request)){
+            return redirect('/country')->with('message', 'Country has been updated!');
+        }
+        return redirect('/country')->with('Error', 'Error updating Country!');
+    }
+
+    public function destroy(Country $country)
+    {
+        $country->delete();
+        return redirect('/country')->with('message', 'Country has been deleted!');
     }
 
 

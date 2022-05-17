@@ -13,10 +13,11 @@
         <h1>Add country</h1>
     </div>
 
-        @if($country->id==null)
-            <form action="/country" method="POST">
+        @empty($country)
+            <form action="/country/{{$country->id}}" method="POST">
+            @method('PUT')
         @else
-            <form action="/country/{{ $country->id }}" method="PUT">
+            <form action="/country" method="POST">
         @endif
 
         @csrf
@@ -25,10 +26,10 @@
             <input type="text" class="form-control" name="name" placeholder="Enter country name" value="{{ old('name', $country->name) }}">
         </div>
 
-        @empty($country)
-            <button type="submit">Send</button>
-        @else
+        @isset($country)
             <button type="submit">Edit</button>
+        @else
+            <button type="submit">Send</button>
         @endempty
     </form>
     <script src="{{ asset('js/app.js') }}"></script>

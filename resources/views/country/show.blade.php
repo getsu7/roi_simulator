@@ -13,8 +13,12 @@
         <p>{{ $country->name }}</p>
     </div>
 
-    <a class="btn btn-primary" href="/country/{{$country}}/edit" role="button">Edit</a>
-    <a method="DELETE" class="btn btn-primary" href="/country/{{$country}}" role="button">Delete</a>
+    <a class="btn btn-primary" href="/country/{{$country->id}}/edit" role="button">Edit</a>
+    <form action="/country/{{ $country->id }}" method="POST">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-primary">Delete</button>
+    </form>
 
     
     
