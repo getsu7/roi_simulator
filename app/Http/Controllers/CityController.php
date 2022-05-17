@@ -3,16 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\City;
-use App\Models\Month;
+use App\Models\Country;
 use Illuminate\Http\Request;
-use App\Models\SolarIrradiance;
-use Illuminate\Support\Facades\Auth;
+
 
 class CityController extends Controller
 {
-
-    private City $city;
-
     // List all cities
     public function index()
     {
@@ -28,37 +24,46 @@ class CityController extends Controller
     // Show form to create new city
     public function create()
     {
-        return view('city.create', ['city' => new City()]);
+        return view('city.create', ['countries' => Country::all()]);
     }
 
     // Store new city
     public function store(Request $request)
     {
-        if($this->setCityAttributes($request)){
+        $city = new City();
+
+        if($city->setCityAttributes($request)){
             return redirect('/city')->with('message', 'City has been added!');
         }
-        return redirect('/city')->with('message', 'Error adding City!');
+        return redirect('/city')->with('error', 'Error adding City!');
     }
 
     // Show form to edit city
     public function edit(City $city)
     {
-        return view('city.edit', ['city' => $city]);
+
+        return view('city.edit', 
+        ['city' => $city,
+        'countries' => Country::all()
+        ]);
     }
 
     // Update city
     public function update(Request $request, City $city)
     {
-        $city->city = $request->city;
-        $city->country = $request->country;
-        $city->save();
+        if($city->updateCityAttributes($request)){
+            return redirect('/city')->with('message', 'City has been updated!');
+        }
+        return redirect('/city')->with('error', 'Error updating City!');
     }
 
     // Delete city
     public function destroy(City $city)
     {
-        $city->delete();
-        return redirect('/city')->with('message', 'City has been deleted!');
+        if($city->deleteCity()){
+            return redirect('/city')->with('message', 'City has been deleted!');
+        }
+        return redirect('/city')->with('error', 'Error deleting city!');
     }
 
 }

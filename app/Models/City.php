@@ -16,8 +16,7 @@ class City extends Model
     
     protected $fillable = [
         'name',
-        'country',
-        'user',
+        'country_id',
     ];
 
     public function country()
@@ -37,10 +36,31 @@ class City extends Model
 
     public function setCityAttributes(Request $request)
     {
-        $this->name = $request->name;
-        $this->country = $request->country;
-        $this->user = Auth::user();
+        $this->name = $request->city;
+        $this->country_id = $request->country_id;
+        $this->user_id = Auth::id();
         if($this->save()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function updateCityAttributes(Request $request)
+    {
+        $this->name = $request->city;
+        $this->country_id = $request->country_id;
+        $this->user_id = Auth::id();
+        if($this->update()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function deleteCity()
+    {
+        if($this->delete()){
             return true;
         }else{
             return false;

@@ -10,15 +10,16 @@
 <body>
     <div class="mb-3">
         <h1>City</h1>
-        <p>{{ $city->city }}</p>
+        <p>{{ $city->name }}</p>
     </div>
 
-    <a class="btn btn-primary" href="/city/{$city}/edit" role="button">Edit</a>
-    <a method="DELETE" class="btn btn-primary" href="/city/{$city}" role="button">Delete</a>
+    <a class="btn btn-primary" href="/city/{{$city->id}}/edit" role="button">Edit</a>
+    <form action="/city/{{$city->id}}" method="POST">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-primary">Delete</button>
+    </form>
 
-    
-    
-        
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

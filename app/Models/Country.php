@@ -28,7 +28,7 @@ class Country extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function addCountry(Request $request)
+    public function setCountryAttributes(Request $request)
     {
         $this->name = $request->name;
         $this->user_id = Auth::id();
@@ -44,6 +44,14 @@ class Country extends Model
         $this->name = $request->name;
         $this->user_id = Auth::id();
         if($this->update()) {
+            return true;
+        }
+        return false;
+    }
+
+    public function deleteCountry()
+    {
+        if($this->delete()) {
             return true;
         }
         return false;

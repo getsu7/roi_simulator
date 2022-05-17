@@ -10,27 +10,28 @@
 <body>
 
     <div class="mb-3">
-        <h1>Add City</h1>
+        <h1>Edit City</h1>
     </div>
 
-    <form action="/city" method="POST"> 
+    <form action="/city/{{$city->id}}" method="POST">
+        @method('PUT')
+    
         @csrf
         <div class="mb-3">
             <label for="city">City</label>
-            <input type="text" class="form-control" name="city" placeholder="Enter city name">
+            <input type="text" class="form-control" name="city" placeholder="Enter city name" value="{{ old('city', $city->name) }}">
         </div>
 
         <div class="mb-3">
             <select name="country_id" class="form-control">
                 <option value="">Select Country</option>
             @foreach ($countries as $country)
-                    <option value="{{ $country->id }}">{{ $country->name }}</option>    
+                    <option value="{{ $country->id }}" {{ $country->id == old('country_id', $city->country_id) ? 'selected' : '' }}>{{ $country->name }}</option>    
             @endforeach
             </select>
         </div>
 
-        <button type="submit">Send</button>
-
+        <button type="submit">Edit</button>
     </form>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>

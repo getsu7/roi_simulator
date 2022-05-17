@@ -10,19 +10,19 @@
 <body>
 
     <div class="mb-3">
-        <h1>Add country</h1>
+        <h1>Edit Country</h1>
     </div>
 
-        <form action="/country" method="POST">    
-
+    <form action="/country/{{$country->id}}" method="POST">
+        @method('PUT')
+    
         @csrf
         <div class="mb-3">
-            <label for="country">Country</label>
-            <input type="text" class="form-control" name="name" placeholder="Enter country name">
+            <label for="country">country</label>
+            <input type="text" class="form-control" name="name" placeholder="Enter country name" value="{{ old('country', $country->name) }}">
         </div>
 
-        <button type="submit">Send</button>
-     
+        <button type="submit">Edit</button>
     </form>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>

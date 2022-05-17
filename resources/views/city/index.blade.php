@@ -16,15 +16,13 @@
                 <thead>
                     <tr>
                         <th scope="col">City</th>
-                        <th scope="col">Country</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($cities as $city)
                         <tr>
-                            <td>{{ $city->city }}</td>
-                            <td>{{ $city->country }}</td>
+                            <td>{{ $city->name }}</td>
                             <td>
                                 <a class="btn btn-primary" href="/city/{{ $city->id }}" role="button">Details</a>
                                 <a class="btn btn-primary" href="/city/{{ $city->id }}/edit" role="button">Edit</a>
