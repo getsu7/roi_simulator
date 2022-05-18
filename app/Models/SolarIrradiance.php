@@ -6,7 +6,9 @@ use App\Models\City;
 use App\Models\User;
 use App\Models\Month;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class SolarIrradiance extends Model
@@ -38,22 +40,21 @@ class SolarIrradiance extends Model
         '21',
         '22',
         '23',
-        'month',
-        'city',
-        'user',
+        'month_id',
+        'city_id',
     ];
 
-    public function month()
+    public function month(): BelongsTo
     {
         return $this->belongsTo(Month::class);
     }
 
-    public function city()
+    public function city(): BelongsTo
     {
         return $this->belongsTo(City::class);
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
@@ -66,10 +67,39 @@ class SolarIrradiance extends Model
         for($i = 0; $i < count($json['outputs']['daily_profile']); $i++) {
             $this->{$i} = $json['outputs']['daily_profile'][$i]['G(n)'];
         }
-        $this->month = $request->month;
-        $this->city = $request->city;
-        $this->user = $request->user;
+        $this->month_id = $request->month;
+        $this->city_id = $request->city;
+        $this->user_id = Auth::id();
         if($this->save()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function updateSolarIrradianceAttributes(Request $request)
+    {
+        if(!empty($request->json_file)){
+            $data = file_get_contents($request->json_file);
+            $json = json_decode($data, true);
+
+            for($i = 0; $i < count($json['outputs']['daily_profile']); $i++) {
+                $this->{$i} = $json['outputs']['daily_profile'][$i]['G(n)'];
+            }
+        }
+        $this->month_id = $request->month;
+        $this->city_id = $request->city;
+        $this->user_id = Auth::id();
+        if($this->update()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function deleteSolarIrradiance()
+    {
+        if($this->delete()) {
             return true;
         } else {
             return false;

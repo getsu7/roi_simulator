@@ -11,6 +11,11 @@
     <div class="mb-3">
         <h1>City</h1>
         <p>{{ $city->name }}</p>
+        <h1>Country</h1>
+        <p>{{ $city->country->name }}</p>
+        <h1>Edited by</h1>
+        <p>{{ $city->user->name }}</p>
+        <p>{{$city->id}}</p>
     </div>
 
     <a class="btn btn-primary" href="/city/{{$city->id}}/edit" role="button">Edit</a>

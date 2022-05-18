@@ -13,11 +13,11 @@
     <form action="/irradiance" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">  
-            <select class="form-select" aria-label="Choose Month" name="month">
-                <option selected>Choose the month</option>
+            <select class="form-select" aria-label="Choose city" name="city">
+                <option selected>Choose the city</option>
 
                 @foreach ($cities as $city)
-                <option value="{{ $city->id }}">{{ $city->city }}</option>
+                <option value="{{ $city->id }}">{{ $city->name }}</option>
                 @endforeach
             </select>
         </div>

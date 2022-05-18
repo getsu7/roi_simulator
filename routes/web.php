@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\SolarIrradianceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,5 +74,35 @@ Route::put('/city/{city}', [CityController::class, 'update'])->middleware(['auth
 // Delete city
 Route::delete('/city/{city}', [CityController::class, 'destroy'])->middleware(['auth'])->name('city.destroy');
 
+/**
+ * CRUD routes for solar irradiance
+ */
 
+// Show solar irradiance create form
+Route::get('/irradiance/create', [SolarIrradianceController::class, 'create'])->middleware(['auth'])->name('solarirradiance.create');
+
+// List all solar irradiances
+Route::get('/irradiance', [SolarIrradianceController::class, 'index'])->middleware(['auth'])->name('solarirradiance');
+
+// Show single solar irradiance
+Route::get('/irradiance/{solarIrradiance}', [SolarIrradianceController::class, 'show'])->middleware(['auth'])->name('solarirradiance.show');
+
+// Store a new solar irradiance
+Route::post('/irradiance', [SolarIrradianceController::class, 'store'])->middleware(['auth'])->name('solarirradiance.store');
+
+// Show edit form
+Route::get('/irradiance/{solarIrradiance}/edit', [SolarIrradianceController::class, 'edit'])->middleware(['auth'])->name('solarirradiance.edit');
+
+// Update solar irradiance
+Route::put('/irradiance/{solarIrradiance}', [SolarIrradianceController::class, 'update'])->middleware(['auth'])->name('solarirradiance.update');
+
+// Delete solar irradiance
+Route::delete('/irradiance/{solarIrradiance}', [SolarIrradianceController::class, 'destroy'])->middleware(['auth'])->name('solarirradiance.destroy');
+
+
+
+/**
+ * Authentication routes
+ */
+     
 require __DIR__.'/auth.php';

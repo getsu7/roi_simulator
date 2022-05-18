@@ -11,11 +11,11 @@
 
     <h1>Solar Irradiance Data</h1>
     @foreach ($solarIrradiances as $solarIrradiance)
-    <a href="/list/{{ $solarIrradiance->id }}" > {{ $solarIrradiance->month }} <a>
-    <p>{{ $solarIrradiance->city_country }}</p>
+    <a href="/irradiance/{{ $solarIrradiance->id }}" > {{ $solarIrradiance->month->month}} <a>
+    <p> </p>
     <br>
     @endforeach
 
-    <a href="/list/create">Add a new solar irradiance data</a>
+    <a href="/irradiance/create">Add a new solar irradiance data</a>
 </body>
 </html>

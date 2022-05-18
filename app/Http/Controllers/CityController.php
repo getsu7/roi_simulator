@@ -35,7 +35,7 @@ class CityController extends Controller
         if($city->setCityAttributes($request)){
             return redirect('/city')->with('message', 'City has been added!');
         }
-        return redirect('/city')->with('error', 'Error adding City!');
+        return redirect('/city/create')->with('error', 'Error adding City!');
     }
 
     // Show form to edit city
@@ -54,7 +54,7 @@ class CityController extends Controller
         if($city->updateCityAttributes($request)){
             return redirect('/city')->with('message', 'City has been updated!');
         }
-        return redirect('/city')->with('error', 'Error updating City!');
+        return redirect('/city' . $city->id . '/edit')->with('error', 'Error updating City!');
     }
 
     // Delete city
@@ -63,7 +63,6 @@ class CityController extends Controller
         if($city->deleteCity()){
             return redirect('/city')->with('message', 'City has been deleted!');
         }
-        return redirect('/city')->with('error', 'Error deleting city!');
+        return redirect('/city' . '/' . $city->id )->with('error', 'Error deleting city!');
     }
-
 }
