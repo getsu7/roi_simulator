@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CityController;
-use App\Http\Controllers\CountryController;
-use App\Http\Controllers\SolarIrradianceController;
+use App\Http\Controllers\Editor\CityController;
+use App\Http\Controllers\Editor\CountryController;
+use App\Http\Controllers\Editor\SolarIrradianceController;
 
 /*
 |--------------------------------------------------------------------------

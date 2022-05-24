@@ -23,16 +23,16 @@ return new class extends Migration
         Schema::create('solar_irradiances', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('city_id');
             $table->unsignedBigInteger('month_id');
+            $table->unsignedBigInteger('city_id');
             for($i = 0; $i <= 23; $i++) {
                 $table->float($i, 6, 2);
             }
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
             $table->foreign('month_id')->references('id')->on('months');
+            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
         });
 
     }
