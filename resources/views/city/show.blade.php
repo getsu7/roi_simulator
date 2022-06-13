@@ -1,30 +1,103 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SI details</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-</head>
+<x-head/>
+<x-navbar/>
 <body>
-    <div class="mb-3">
-        <h1>City</h1>
-        <p>{{ $city->name }}</p>
-        <h1>Country</h1>
-        <p>{{ $city->country->name }}</p>
-        <h1>Edited by</h1>
-        <p>{{ $city->user->name }}</p>
-        <p>{{$city->id}}</p>
+
+    <div class="m-3">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">City</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">Last edit</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+                <tbody>
+                        <tr>
+                            <td>
+                                {{ $city->name }}
+                            </td>
+                            
+                            <td>
+                                {{ $city->country->name }}
+                            </td>
+    
+                            <td>
+                                {{ $city->updated_at }}
+                            </td>
+    
+                            <td>
+                                <a class="btn btn-primary mb-1" href="/city/{{ $city->id }}/edit" role="button">Edit</a>
+                                <form action="/city/{{ $city->id }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                </tbody>
+        </table>
     </div>
 
-    <a class="btn btn-primary" href="/city/{{$city->id}}/edit" role="button">Edit</a>
-    <form action="/city/{{$city->id}}" method="POST">
-        @csrf
-        @method('DELETE')
-        <button type="submit" class="btn btn-primary">Delete</button>
-    </form>
+    <div class="mt-5 m-3">
+        <form action="/irradiance" method="POST" enctype="multipart/form-data">
+            @csrf
+            <input type="hidden" name="city" value="{{ $city->id }}">
+            <div class="mb-3">
+                <select class="form-select" aria-label="Choose Month" name="month">
+                    <option selected>Choose the month</option>
+    
+                    @foreach ($months as $month)
+                    <option value="{{ $month->id }}">{{ $month->month }}</option>
+                    @endforeach
+                </select>
+            </div>
+    
+            <div class="mb-3">
+                <label for="data" class="form-label">Select the json file</label>
+                <input type="file" class="form-control" name="json_file">
+            </div>
+    
+            <button class="btn btn-success" type="submit">Add Irradiance</button>
+    
+        </form>
+    </div>
 
-    <script src="{{ asset('js/app.js') }}"></script>
+    
+  
+
+    <div class="m-3">
+        @if ($city->solarIrradiance->count() > 0)
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Month</th>
+                    <th scope="col">Actions</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @foreach ($city->solarIrradiance as $solarIrradiance)
+                    <tr>
+                        <td>
+                            {{ $solarIrradiance->month->month }}
+                        </td>
+                        <td>
+                            <a class="btn btn-primary mb-1" href="/irradiance/{{ $solarIrradiance->id }}/edit" role="button">Edit</a>
+                            <form action="/irradiance/{{ $solarIrradiance->id }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table> 
+    </div>
+    @else
+        <p>No solar irradiance data available for this city.</p>
+        
+    @endif
 </body>
 </html>

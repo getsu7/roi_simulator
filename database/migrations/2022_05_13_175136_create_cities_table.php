@@ -13,9 +13,6 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('cities');
-        
-        Schema::enableForeignKeyConstraints();
 
         Schema::create('cities', function (Blueprint $table) {
             $table->id();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Editor;
 
 use App\Models\City;
+use App\Models\Month;
 use App\Models\Country;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,7 +20,8 @@ class CityController extends Controller
     // Show single city
     public function show(City $city)
     {
-        return view('city.show', ['city' => $city]);
+        $months = Month::all();
+        return view('city.show', ['city' => $city, 'months' => $months]);
     }
 
     // Show form to create new city

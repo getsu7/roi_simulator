@@ -47,7 +47,8 @@ class SolarIrradianceController extends Controller
     public function edit(SolarIrradiance $solarIrradiance)
     {
         return view('irradiance.edit', 
-        ['solarIrradiance' => $solarIrradiance,
+        [
+        'solarIrradiance' => $solarIrradiance,
         'months' => Month::all(),
         'cities' => City::all(),
         ]);
