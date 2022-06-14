@@ -1,5 +1,6 @@
 <x-head/>
 <x-navbar/>
+<x-message/>
 <body>
 
     <div class="m-3">
@@ -39,32 +40,42 @@
         </table>
     </div>
 
-    <div class="mt-5 m-3">
-        <form action="/irradiance" method="POST" enctype="multipart/form-data">
-            @csrf
-            <input type="hidden" name="city" value="{{ $city->id }}">
-            <div class="mb-3">
-                <select class="form-select" aria-label="Choose Month" name="month">
-                    <option selected>Choose the month</option>
-    
-                    @foreach ($months as $month)
-                    <option value="{{ $month->id }}">{{ $month->month }}</option>
-                    @endforeach
-                </select>
+    <div class="container-sm" id="addSolarIrradianceAccordion">
+        <div class="accordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  Add Solar Irradiance
+                </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <form action="/irradiance" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="city" value="{{ $city->id }}">
+                        <div class="mb-3">
+                            <select class="form-select" aria-label="Choose Month" name="month">
+                                <option selected>Choose the month</option>
+                
+                                @foreach ($months as $month)
+                                <option value="{{ $month->id }}">{{ $month->month }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                
+                        <div class="mb-3">
+                            <label for="data" class="form-label">Select the json file containing the data</label>
+                            <input type="file" class="form-control" name="json_file">
+                        </div>
+                
+                        <button class="btn btn-success" type="submit">Add Irradiance</button>
+                
+                    </form>
+                </div>
+              </div>
             </div>
-    
-            <div class="mb-3">
-                <label for="data" class="form-label">Select the json file</label>
-                <input type="file" class="form-control" name="json_file">
-            </div>
-    
-            <button class="btn btn-success" type="submit">Add Irradiance</button>
-    
-        </form>
-    </div>
-
-    
-  
+        </div>    
+    </div> 
 
     <div class="m-3">
         @if ($city->solarIrradiance->count() > 0)

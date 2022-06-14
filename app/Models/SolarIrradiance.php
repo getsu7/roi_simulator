@@ -61,19 +61,26 @@ class SolarIrradiance extends Model
     
     public function setSolarIrradianceAttributes(Request $request)
     {
-        $data = file_get_contents($request->json_file);
-        $json = json_decode($data, true);
-
-        for($i = 0; $i < count($json['outputs']['daily_profile']); $i++) {
-            $this->{$i} = $json['outputs']['daily_profile'][$i]['G(n)'];
-        }
         $this->month_id = $request->month;
         $this->city_id = $request->city;
         $this->user_id = Auth::id();
-        if($this->save()) {
-            return true;
+        if(!empty($request->json_file)){
+            $data = file_get_contents($request->json_file);
+            $json = json_decode($data, true);
+            for($i = 0; $i < count($json['outputs']['daily_profile']); $i++) {
+                $this->{$i} = $json['outputs']['daily_profile'][$i]['G(n)'];
+            }
         } else {
             return false;
+
+        } try {
+            $this->save();
+            return true;
+
+        } catch (\Exception $e) {
+            report($e);
+            return false;
+
         }
     }
 
@@ -90,19 +97,27 @@ class SolarIrradiance extends Model
         $this->month_id = $request->month;
         $this->city_id = $request->city;
         $this->user_id = Auth::id();
-        if($this->update()) {
+        try {
+            $this->update();
             return true;
-        } else {
+
+        } catch (\Exception $e) {
+            report($e);
             return false;
+
         }
     }
 
     public function deleteSolarIrradiance()
     {
-        if($this->delete()) {
+        try {
+            $this->delete();
             return true;
-        } else {
+
+        } catch (\Exception $e) {
+            report($e);
             return false;
+            
         }
     }
 }

@@ -2,13 +2,13 @@
 <x-navbar/>
 <body>
 
-    <div class="m-3">
+    <div class="container-sm">
         <form action="/city/{{$city->id}}" method="POST">
             @method('PUT')
         
             @csrf
             <div class="mb-3">
-                <label for="city">City</label>
+                <label for="city" class="form-label">City</label>
                 <input type="text" class="form-control" name="city" placeholder="Enter city name" value="{{ old('city', $city->name) }}">
             </div>
     
